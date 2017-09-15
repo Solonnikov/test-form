@@ -1,0 +1,113 @@
+<div class="container">
+  <h3 class="text-center">
+    Please, Register</h3>
+  <div class="container">
+    <div class="card">
+      <div class="card-header">
+        Registration
+      </div>
+      <div class="card-body">
+        <form (ngSubmit)="onRegisterSubmit()" [formGroup]="registerForm">
+          <!--Step 1-->
+          <div *ngIf="step1" class="form-group">
+            <label class="control-label required" for="firstName">Sum</label>
+            <input type="number" class="form-control" id="sum" placeholder="Sum" formControlName="sum" min="1" max="10000">
+            <div class="error" *ngIf="registerForm.get('sum').hasError('required') && registerForm.get('sum').touched">
+              Sum is required
+            </div>
+            <div class="error" *ngIf="registerForm.get('sum').hasError('min') && registerForm.get('sum').touched">
+              Required Range is 1-10000
+            </div>
+            <div class="error" *ngIf="registerForm.get('sum').hasError('max') && registerForm.get('sum').touched">
+              Required Range is 1-10000
+            </div>
+          </div>
+          <div *ngIf="step1" class="form-group">
+            <label class="control-label required" for="term">Term</label>
+            <input type="number" class="form-control" id="term" placeholder="Term" formControlName="term">
+            <div class="error" *ngIf="registerForm.get('term').hasError('required') && registerForm.get('term').touched">
+              Term is required
+            </div>
+            <div class="error" *ngIf="registerForm.get('term').hasError('min') && registerForm.get('term').touched">
+              Required Range is 1-12
+            </div>
+            <div class="error" *ngIf="registerForm.get('term').hasError('max') && registerForm.get('term').touched">
+              Required Range is 1-12
+            </div>
+          </div>
+          <div *ngIf="step1" [hidden]="step3" class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">1</div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div *ngIf="step1" [hidden]="step3" class="container">
+            <button [disabled]="registerForm.get('sum').invalid || registerForm.get('term').invalid" (click)="step1=false; step2=true; step3=false"
+              class="btn btn-success btn-sm">Next</button>
+          </div>
+          <!--Step 2-->
+          <div *ngIf="step2" class="form-group">
+            <label class="control-label required" for="inn">INN</label>
+            <input type="number" class="form-control" id="inn" placeholder="INN" formControlName="inn">
+            <div class="error" *ngIf="registerForm.get('inn').hasError('required') && registerForm.get('inn').touched">
+              INN is required
+            </div>
+            <div class="error" *ngIf="registerForm.get('inn').hasError('pattern') && registerForm.get('inn').touched">
+              INN consists of 10 digits
+            </div>
+            <div class="error" *ngIf="registerForm.get('inn').hasError('max') && registerForm.get('inn').touched && !registerForm.get('inn').hasError('pattern')">
+              Sorry, you are not 21 years old.
+            </div>
+          </div>
+          <div *ngIf="step2" class="form-group">
+            <label class="control-label required" for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName">
+            <div class="error" *ngIf="registerForm.get('lastName').hasError('required') && registerForm.get('lastName').touched">
+              Last Name is required
+            </div>
+          </div>
+          <div *ngIf="step2" class="form-group">
+            <label class="control-label required" for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="First Name" formControlName="firstName">
+            <div class="error" *ngIf="registerForm.get('firstName').hasError('required') && registerForm.get('firstName').touched">
+              First Name is required
+            </div>
+          </div>
+          <div *ngIf="step2" class="form-group">
+            <label class="control-label required" for="city">City</label>
+            <input class="form-control" type="text" (city)='city=$event' id="autocomplete" formControlName="city" ng2-google-place-autocomplete/>
+            <div class="error" *ngIf="registerForm.get('city').hasError('required') && registerForm.get('city').touched">
+              City is required
+            </div>
+          </div>
+          <div *ngIf="step2" [hidden]="step3" class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">1</div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100">2</div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+          </div>
+          <div *ngIf="step2" [hidden]="step3" class="container">
+            <button type="button" [disabled]="registerForm.get('inn').invalid || registerForm.get('lastName').invalid || registerForm.get('firstName').invalid || registerForm.get('city').invalid"
+              (click)="step1=true; step2=true; step3=true" class="btn btn-success btn-sm">Next</button>
+            <button (click)="step1=true; step2=false; step3=false" class="btn btn-default btn-sm">Back</button>
+          </div>
+          <!--Step 3-->
+          <div *ngIf="step3" class="progress">
+            <div class="progress-bar" role="progressbar" style="width: 33.3%" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100">1</div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 33.3%" aria-valuenow="33.3" aria-valuemin="0" aria-valuemax="100">2</div>
+            <div class="progress-bar bg-default" role="progressbar" style="width: 33.4%" aria-valuenow="33.4" aria-valuemin="0" aria-valuemax="100">3</div>
+          </div>
+          <div *ngIf="step3">
+            <button [disabled]="registerForm.invalid " class="btn btn-success btn-block submit" type="submit ">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="submitted" class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-3">Thank you!</h1>
+    <p class="lead">Form has been successfully submitted. We will contact you soon!</p>
+    <p routerLink="/">Go to Main</p>
+  </div>
+</div>

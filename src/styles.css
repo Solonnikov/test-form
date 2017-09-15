@@ -1,1 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    font-family: 'Lato', sans-serif;
+}
+
+.alert {
+  margin-bottom: 0 !important;
+  border-radius: 0 !important;
+}
+
+.alert p {
+    margin-bottom: 0 !important;
+}
